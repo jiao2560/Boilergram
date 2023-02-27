@@ -17,10 +17,15 @@ export default function Login() {
   useEffect(() => {
     document.title = 'Login - Boilergram';
   }, []);
-  
+
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-        <p>Testing</p>
+      <div className='flex w-3/5'>
+        <img src="/images/boilergram.png" alt="Boilergram Icon"/>
+      </div>
+      <div className='flex flex-col w-2/5'>
+        <p>I will be the form</p>
+      </div>
     </div>
   );
 }
