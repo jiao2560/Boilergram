@@ -1,5 +1,5 @@
 import {useState, useContext, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
 
@@ -73,7 +73,7 @@ export default function Login() {
               type="submit"
               className={`bg-blue-medium text-white w-full
                           rounded h-8 font-bold 
-              ${isInvalid && 'opacity-50'}`}
+                          ${isInvalid && 'opacity-50'}`}
             >
               Log in
             </button>
@@ -83,9 +83,9 @@ export default function Login() {
                         bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
             Don&apos;t have an account?{` `}
-            <a to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
+            <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
