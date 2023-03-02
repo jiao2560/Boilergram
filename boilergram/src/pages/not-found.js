@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 
 export default function NotFound() {
   useEffect(() => {
-    document.title = 'Not Found - boilergram';
+    document.title = 'Not Found - Boilergram';
   }, []);
 
   return (
