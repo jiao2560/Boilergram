@@ -27,6 +27,8 @@ export default function SignUp() {
             .auth()
             .createUserWithEmailAndPassword(emailAddress, password);
 
+        await createdUserResult.user.sendEmailVerification();
+
         // authentication
         // -> emailAddress & password & username (displayName)
         await createdUserResult.user.updateProfile({
@@ -42,12 +44,12 @@ export default function SignUp() {
               username: username.toLowerCase(),
               fullName,
               emailAddress: emailAddress.toLowerCase(),
-              following: ['2'],
+              following: [],
               followers: [],
               dateCreated: Date.now(),
             });
 
-        history.push(ROUTES.DASHBOARD);
+        history.push(ROUTES.LOGIN);
       } catch (error) {
         setFullName('');
         setEmailAddress('');
