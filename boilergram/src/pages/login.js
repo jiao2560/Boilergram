@@ -2,7 +2,6 @@ import {useState, useContext, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 export default function Login() {
   const history = useHistory();
@@ -26,8 +25,6 @@ export default function Login() {
       setError(error.message);
     }
   };
-
-
 
   useEffect(() => {
     document.title = 'Login - Boilergram';
@@ -90,13 +87,13 @@ export default function Login() {
               Sign up
             </Link>
           </p>
-
         </div>
 
         <div className="flex justify-center items-center flex-col w-full
                         bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
-            <Link to={ROUTES.RESET_PASSWORD} className="font-bold text-blue-medium">
+            <Link to={ROUTES.RESET_PASSWORD}
+              className="font-bold text-blue-medium">
               Reset password
             </Link>
           </p>
@@ -106,7 +103,8 @@ export default function Login() {
         <div className="flex justify-center items-center flex-col w-full
                         bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
-            <Link to={ROUTES.RESET_USERNAME} className="font-bold text-blue-medium">
+            <Link to={ROUTES.RESET_USERNAME}
+              className="font-bold text-blue-medium">
               Reset username
             </Link>
           </p>
@@ -116,7 +114,8 @@ export default function Login() {
         <div className="flex justify-center items-center flex-col w-full
                         bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
-            <Link to={ROUTES.RESET_EMAIL} className="font-bold text-blue-medium">
+            <Link to={ROUTES.RESET_EMAIL}
+              className="font-bold text-blue-medium">
               Reset email
             </Link>
           </p>
@@ -126,20 +125,12 @@ export default function Login() {
         <div className="flex justify-center items-center flex-col w-full
                         bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
-            <Link to={ROUTES.VIEW_PROFILE} className="font-bold text-blue-medium">
+            <Link to={ROUTES.VIEW_PROFILE}
+              className="font-bold text-blue-medium">
               view profile
             </Link>
           </p>
-
         </div>
-
-
-
-
-
-
-
-
 
       </div>
     </div>

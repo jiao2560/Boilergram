@@ -47,8 +47,9 @@ export default function SignUp() {
               dateCreated: Date.now(),
             });
 
-        history.push(ROUTES.DASHBOARD);
+        history.push(ROUTES.LOGIN);
       } catch (error) {
+        setUsername('');
         setFullName('');
         setEmailAddress('');
         setPassword('');
@@ -56,7 +57,8 @@ export default function SignUp() {
       }
     } else {
       setUsername('');
-      setError('That username is already taken, please try another.');
+      setPassword('');
+      setError('Username is already taken, please try another.');
     }
   };
 
