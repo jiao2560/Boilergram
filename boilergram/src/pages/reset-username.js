@@ -29,7 +29,7 @@ export default function ResetEmail() {
         <p className="text-sm">
 
 
-        <input className="resetEmailInput1" placeholder="new username" name = "oldemail" type="text" value={oldemail}
+        <input className="resetEmailInput1" placeholder="old username" name = "oldemail" type="text" value={oldemail}
        onChange={e => setoldemail(e.target.value)} required/><br></br>
 
       <button className="resetBtn" type="button" onClick={triggerResetEmail}>Reset username</button>
