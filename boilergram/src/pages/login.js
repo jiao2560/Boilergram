@@ -2,6 +2,7 @@ import {useState, useContext, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
+import {deleteUser} from "firebase/auth";
 
 export default function Login() {
   const history = useHistory();
@@ -20,9 +21,15 @@ export default function Login() {
       await firebase.auth().signInWithEmailAndPassword(emailAddress, password)
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log(user.emailVerified);
             if (!user.emailVerified) {
-              setError('Please verify your email.');
+              if (Date.parse(user.metadata.creationTime) < Date.now()) {
+                setError('You did not verify the email within 24 hours, the account has been deleted, please sign up again.');
+                firebase.auth().signOut();
+                deleteUser(user);
+              } else {
+                setError('Please verify your email.');
+                firebase.auth().signOut();
+              }
             } else {
               history.push(ROUTES.DASHBOARD);
             };
@@ -31,6 +38,7 @@ export default function Login() {
       setEmailAddress('');
       setPassword('');
       setError(error.message);
+      firebase.auth().signOut();
     }
   };
 
