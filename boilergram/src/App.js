@@ -9,6 +9,10 @@ const SignUp = lazy(() => import('./pages/sign-up'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
 const NotFound = lazy(() => import('./pages/not-found'));
 const Profile = lazy(() => import('./pages/profile'));
+const ResetPassword = lazy(() => import('./pages/reset-password'));
+const ResetUsername = lazy(() => import('./pages/reset-username'));
+const ResetEmail = lazy(() => import('./pages/reset-email'));
+const ViewProfile = lazy(() => import('./pages/view-profile'));
 
 export default function App() {
   const {user} = useAuthListener();
