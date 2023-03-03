@@ -22,7 +22,7 @@ export default function Login() {
           .then((userCredential) => {
             const user = userCredential.user;
             if (!user.emailVerified) {
-              if (Date.parse(user.metadata.creationTime) < Date.now()) {
+              if (Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 < Date.now()) {
                 setError('You did not verify the email within 24 hours, the account has been deleted, please sign up again.');
                 firebase.auth().signOut();
                 deleteUser(user);

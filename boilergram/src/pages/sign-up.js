@@ -21,7 +21,8 @@ export default function SignUp() {
     event.preventDefault();
 
     const usernameExists = await doesUsernameExist(username);
-    if (!usernameExists) {
+
+    if (!usernameExists && /^[A-Z0-9._%+-]+@purdue.edu$/i.test(emailAddress)) {
       try {
         const createdUserResult = await firebase
             .auth()
@@ -55,10 +56,17 @@ export default function SignUp() {
         setEmailAddress('');
         setPassword('');
         setError(error.message);
+        firebase.auth().signOut();
       }
     } else {
-      setUsername('');
-      setError('That username is already taken, please try another.');
+      if (/^[A-Z0-9._%+-]+@purdue.edu$/i.test(emailAddress)) {
+        setUsername('');
+        setError('That username is already taken, please try another.');
+      } else {
+        setEmailAddress('');
+        setError('Please sign-up with a Purdue E-mail address.');
+      };
+      firebase.auth().signOut();
     }
   };
 
