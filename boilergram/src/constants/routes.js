@@ -7,4 +7,4 @@ export const RESET_PASSWORD = '/reset-password';
 export const RESET_EMAIL = '/reset-email';
 export const RESET_USERNAME = '/reset-username';
 export const VIEW_PROFILE = '/view-profile';
-export const RESET_PROFILE = '/reset-profile';
+
