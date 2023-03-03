@@ -1,4 +1,3 @@
-
 import {useState, useEffect} from 'react';
 import {getPhotos} from '../services/firebase';
 

@@ -35,6 +35,14 @@ export default function Profile({user}) {
         setFollowerCount={dispatch}
       />
       <Photos photos={photosCollection} />
+
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          window.location.href='http://google.com';
+        }}
+      > My website</button>
     </>
   );
 }
