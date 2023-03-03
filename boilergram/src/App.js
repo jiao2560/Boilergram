@@ -10,6 +10,11 @@ const Dashboard = lazy(() => import('./pages/dashboard'));
 const NotFound = lazy(() => import('./pages/not-found'));
 const Profile = lazy(() => import('./pages/profile'));
 
+const ResetPassword = lazy(() => import('./pages/reset-password'));
+const ResetUsername = lazy(() => import('./pages/reset-username'));
+const ResetEmail = lazy(() => import('./pages/reset-email'));
+const ResetProfile = lazy(() => import('./pages/reset-profile'));
+
 export default function App() {
   const {user} = useAuthListener();
 
@@ -22,6 +27,11 @@ export default function App() {
             <Route path={ROUTES.SIGN_UP} component={SignUp}/>
             <Route path={ROUTES.PROFILE} component={Profile} />
             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
+              
+              <Route path={ROUTES.RESET_PASSWORD} component={ResetPassword}/>
+            <Route path={ROUTES.RESET_USERNAME} component={ResetUsername}/>
+            <Route path={ROUTES.RESET_EMAIL} component={ResetEmail}/>
+            <Route path={ROUTES.RESET_PROFILE} component={ResetProfile}/>
             <Route component={NotFound} />
           </Switch>
         </Suspense>
