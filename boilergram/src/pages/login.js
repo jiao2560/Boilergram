@@ -115,41 +115,6 @@ export default function Login() {
           </p>
 
         </div>
-
-        <div className="flex justify-center items-center flex-col w-full
-                        bg-white p-4 rounded border border-gray-primary">
-          <p className="text-sm">
-            <Link to={ROUTES.RESET_USERNAME}
-              className="font-bold text-blue-medium">
-              Reset username
-            </Link>
-          </p>
-
-        </div>
-
-        <div className="flex justify-center items-center flex-col w-full
-                        bg-white p-4 rounded border border-gray-primary">
-          <p className="text-sm">
-            <Link to={ROUTES.RESET_EMAIL}
-              className="font-bold text-blue-medium">
-              Reset email
-            </Link>
-          </p>
-
-        </div>
-
-
-        <div className="flex justify-center items-center flex-col w-full
-                        bg-white p-4 rounded border border-gray-primary">
-          <p className="text-sm">
-            <Link to={ROUTES.RESET_PROFILE}
-              className="font-bold text-blue-medium">
-              reset profile
-            </Link>
-          </p>
-        </div>
-        
-      </div>
     </div>
   );
 }
