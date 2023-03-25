@@ -22,7 +22,7 @@ export default function SignUp() {
 
     const usernameExists = await doesUsernameExist(username);
 
-    if (!usernameExists && /^[A-Z0-9._%+-]+@purdue.edu$/i.test(emailAddress)) {
+    if (1) {
       try {
         const createdUserResult = await firebase
             .auth()
