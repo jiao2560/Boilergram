@@ -83,10 +83,12 @@ export default function Actions({docId, totalLikes, likedPhoto, handleFocus}) {
           </svg>
         </div>
       </div>
+      {!!likes && (
       <div className="p-4 py-0">
-        <p className="font-bold">{likes === 1 ?
-            `${likes} like` : `${likes} likes`}</p>
-      </div>
+      <p className="font-bold">{likes === 1 ?
+          `${likes} like` : `${likes} likes`}</p>
+    </div>
+      )}
     </>
   );
 }

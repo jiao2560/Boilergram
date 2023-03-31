@@ -1,6 +1,7 @@
 import Firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const config = {
@@ -14,6 +15,8 @@ const config = {
 };
 
 const firebase = Firebase.initializeApp(config);
+
 const {FieldValue} = Firebase.firestore;
+const firestore = getFirestore(firebase);
 const storage = getStorage(firebase, "gs://boilergram-26f3c.appspot.com");;
-export {firebase, FieldValue, storage};
+export {firebase, FieldValue, storage, firestore};

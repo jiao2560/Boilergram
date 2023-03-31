@@ -1,56 +1,56 @@
-import {useState, useContext, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import FirebaseContext from '../context/firebase';
-import * as ROUTES from '../constants/routes';
-import {deleteUser} from 'firebase/auth';
+import { useState, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import FirebaseContext from "../context/firebase";
+import * as ROUTES from "../constants/routes";
+import { deleteUser } from "firebase/auth";
 
 export default function Login() {
   const history = useHistory();
-  const {firebase} = useContext(FirebaseContext);
+  const { firebase } = useContext(FirebaseContext);
 
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [error, setError] = useState('');
-  const isInvalid = password === '' || emailAddress === '';
+  const [error, setError] = useState("");
+  const isInvalid = password === "" || emailAddress === "";
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
       await firebase
-          .auth()
-          .signInWithEmailAndPassword(emailAddress, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            if (!user.emailVerified) {
-              if (
-                Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 <
+        .auth()
+        .signInWithEmailAndPassword(emailAddress, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          if (!user.emailVerified) {
+            if (
+              Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 <
               Date.now()
-              ) {
-                setError(
-                    'You did not verify the email within 24 hours, the account has been deleted, please sign up again.',
-                );
-                firebase.auth().signOut();
-                deleteUser(user);
-              } else {
-                setError('Please verify your email.');
-                firebase.auth().signOut();
-              }
+            ) {
+              setError(
+                "You did not verify the email within 24 hours, the account has been deleted, please sign up again."
+              );
+              firebase.auth().signOut();
+              deleteUser(user);
             } else {
-              history.push(ROUTES.DASHBOARD);
+              setError("Please verify your email.");
+              firebase.auth().signOut();
             }
-          });
+          } else {
+            history.push(ROUTES.DASHBOARD);
+          }
+        });
     } catch (error) {
-      setEmailAddress('');
-      setPassword('');
+      setEmailAddress("");
+      setPassword("");
       setError(error.message);
       firebase.auth().signOut();
     }
   };
 
   useEffect(() => {
-    document.title = 'Login - Boilergram';
+    document.title = "Login - Boilergram";
   }, []);
 
   return (
@@ -83,7 +83,7 @@ export default function Login() {
               placeholder="Email"
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2
                          border border-gray-primary rounded mb-2"
-              onChange={({target}) => setEmailAddress(target.value)}
+              onChange={({ target }) => setEmailAddress(target.value)}
               value={emailAddress}
             />
             <input
@@ -92,7 +92,7 @@ export default function Login() {
               placeholder="Password"
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2
                          border border-gray-primary rounded mb-2"
-              onChange={({target}) => setPassword(target.value)}
+              onChange={({ target }) => setPassword(target.value)}
               value={password}
             />
             <button
@@ -100,7 +100,7 @@ export default function Login() {
               type="submit"
               className={`bg-blue-medium text-white w-full
                           rounded h-8 font-bold 
-                          ${isInvalid && 'opacity-50'}`}
+                          ${isInvalid && "opacity-50"}`}
             >
               Log in
             </button>
