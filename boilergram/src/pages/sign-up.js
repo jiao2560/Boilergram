@@ -20,6 +20,7 @@ export default function SignUp() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
+    // eslint-disable-next-line no-unused-vars
     const usernameExists = await doesUsernameExist(username);
 
     if (1) {

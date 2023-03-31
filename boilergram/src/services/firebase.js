@@ -1,4 +1,13 @@
-import {firebase, FieldValue} from '../lib/firebase';
+import {
+  firebase,
+  FieldValue,
+  storage,
+} from '../lib/firebase';
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+} from 'firebase/storage';
 
 export async function doesUsernameExist(username) {
   const result = await firebase
@@ -65,8 +74,7 @@ export async function updateLoggedInUserFollowing(
       .doc(loggedInUserDocId)
       .update({
         following: isFollowingProfile ?
-                FieldValue.arrayRemove(profileId) :
-                FieldValue.arrayUnion(profileId),
+        FieldValue.arrayRemove(profileId) : FieldValue.arrayUnion(profileId),
       });
 }
 
@@ -81,8 +89,7 @@ export async function updateFollowedUserFollowers(
       .doc(profileDocId)
       .update({
         followers: isFollowingProfile ?
-                FieldValue.arrayRemove(loggedInUserDocId) :
-                FieldValue.arrayUnion(loggedInUserDocId),
+        FieldValue.arrayRemove(loggedInUserDocId) : FieldValue.arrayUnion(loggedInUserDocId),
       });
 }
 
@@ -107,11 +114,24 @@ export async function getPhotos(userId, following) {
         }
         // photo.userId = 2
         const user = await getUserByUserId(photo.userId);
+        // console.log("photo = ", photo.imageSrc)
+        const url = await getDownloadURL(ref(storage, photo.imageSrc));
+        // console.log("url1111 = ", url)
+        photo.imageSrc = url;
         // raphael
-        const {username} = user[0];
-        return {username, ...photo, userLikedPhoto};
+        const {
+          username,
+        } = user[0] ? user[0] : '';
+
+
+        return {
+          username,
+          ...photo,
+          userLikedPhoto,
+        };
       }),
   );
+
 
   return photosWithUserDetails;
 }

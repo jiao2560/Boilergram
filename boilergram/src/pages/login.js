@@ -2,7 +2,7 @@ import {useState, useContext, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import {deleteUser} from "firebase/auth";
+import {deleteUser} from 'firebase/auth';
 
 export default function Login() {
   const history = useHistory();
@@ -18,12 +18,19 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      await firebase.auth().signInWithEmailAndPassword(emailAddress, password)
+      await firebase
+          .auth()
+          .signInWithEmailAndPassword(emailAddress, password)
           .then((userCredential) => {
             const user = userCredential.user;
             if (!user.emailVerified) {
-              if (Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 < Date.now()) {
-                setError('You did not verify the email within 24 hours, the account has been deleted, please sign up again.');
+              if (
+                Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 <
+              Date.now()
+              ) {
+                setError(
+                    'You did not verify the email within 24 hours, the account has been deleted, please sign up again.',
+                );
                 firebase.auth().signOut();
                 deleteUser(user);
               } else {
@@ -32,7 +39,7 @@ export default function Login() {
               }
             } else {
               history.push(ROUTES.DASHBOARD);
-            };
+            }
           });
     } catch (error) {
       setEmailAddress('');
@@ -47,14 +54,18 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="container flex mx-auto
-                    max-w-screen-md items-center h-screen">
-      <div className='flex w-3/5'>
-        <img src="/images/boilergram.png" alt="Boilergram Icon"/>
+    <div
+      className="container flex mx-auto
+                    max-w-screen-md items-center h-screen"
+    >
+      <div className="flex w-3/5">
+        <img src="/images/boilergram.png" alt="Boilergram Icon" />
       </div>
       <div className="flex flex-col w-2/5">
-        <div className="flex flex-col items-center bg-white p-4
-                        border border-gray-primary mb-4">
+        <div
+          className="flex flex-col items-center bg-white p-4
+                        border border-gray-primary mb-4"
+        >
           <h1 className="flex justify-center w-full">
             <img
               src="/images/logo.png"
@@ -95,8 +106,10 @@ export default function Login() {
             </button>
           </form>
         </div>
-        <div className="flex justify-center items-center flex-col w-full
-                        bg-white p-4 rounded border border-gray-primary">
+        <div
+          className="flex justify-center items-center flex-col w-full
+                        bg-white p-4 rounded border border-gray-primary"
+        >
           <p className="text-sm">
             Don&apos;t have an account?{` `}
             <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
@@ -104,18 +117,21 @@ export default function Login() {
             </Link>
           </p>
         </div>
-        
-                <div className="flex justify-center items-center flex-col w-full
-                        bg-white p-4 rounded border border-gray-primary">
+
+        <div
+          className="flex justify-center items-center flex-col w-full
+                        bg-white p-4 rounded border border-gray-primary"
+        >
           <p className="text-sm">
-            <Link to={ROUTES.RESET_PASSWORD}
-              className="font-bold text-blue-medium">
+            <Link
+              to={ROUTES.RESET_PASSWORD}
+              className="font-bold text-blue-medium"
+            >
               Reset password
             </Link>
           </p>
-
         </div>
+      </div>
     </div>
-        </div>
   );
 }

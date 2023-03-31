@@ -27,8 +27,8 @@ export default function App() {
             <Route path={ROUTES.SIGN_UP} component={SignUp}/>
             <Route path={ROUTES.PROFILE} component={Profile} />
             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
-              
-              <Route path={ROUTES.RESET_PASSWORD} component={ResetPassword}/>
+
+            <Route path={ROUTES.RESET_PASSWORD} component={ResetPassword}/>
             <Route path={ROUTES.RESET_USERNAME} component={ResetUsername}/>
             <Route path={ROUTES.RESET_EMAIL} component={ResetEmail}/>
             <Route path={ROUTES.RESET_PROFILE} component={ResetProfile}/>
