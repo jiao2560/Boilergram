@@ -1,9 +1,9 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { formatDistance } from "date-fns";
-import { Link } from "react-router-dom";
-import sty from "./comment.module.css";
-import AddComment from "./add-comment";
+import {useState} from 'react';
+import PropTypes from 'prop-types';
+import {formatDistance} from 'date-fns';
+import {Link} from 'react-router-dom';
+import sty from './comment.module.css';
+import AddComment from './add-comment';
 import {
   collection,
   addDoc,
@@ -13,15 +13,15 @@ import {
   getDoc,
   getDocs,
   query,
-} from "firebase/firestore";
-import { storage, firestore } from "../../lib/firebase";
+} from 'firebase/firestore';
+import {storage, firestore} from '../../lib/firebase';
 
 export default function Comments({
   docId,
   comments: allComments,
   posted,
   commentInput,
-  getTimelinePhotos
+  getTimelinePhotos,
 }) {
   const [comments, setComments] = useState(allComments);
   const [commentsSlice, setCommentsSlice] = useState(3);
@@ -66,16 +66,16 @@ export default function Comments({
                 <div className={sty.optBox}>
                   <a
                     onClick={async () => {
-                      let deepComments = [...comments];
+                      const deepComments = [...comments];
                       deepComments.splice(index, 1);
                       try {
-                        const docRef = doc(firestore, "photos", docId);
+                        const docRef = doc(firestore, 'photos', docId);
                         await updateDoc(docRef, {
                           comments: deepComments,
                         });
                         setComments(deepComments);
-                        getTimelinePhotos()
-                        alert("Delete succeeded!");
+                        getTimelinePhotos();
+                        alert('Delete succeeded!');
                       } catch (err) {
                         console.log(err);
                       }
@@ -86,33 +86,30 @@ export default function Comments({
                   </a>
                   <a
                     onClick={async () => {
-                      let deepComments = [...comments];
+                      const deepComments = [...comments];
                       deepComments[index].edit = !deepComments[index].edit;
                       setComments(deepComments);
                       if (!deepComments[index].edit) {
                         try {
-                          const docRef = doc(firestore, "photos", docId);
-                          delete deepComments[index].edit
+                          const docRef = doc(firestore, 'photos', docId);
+                          delete deepComments[index].edit;
                           deepComments[index].comment = val;
                           await updateDoc(docRef, {
                             comments: deepComments,
                           });
-                          getTimelinePhotos()
+                          getTimelinePhotos();
                           setComments(deepComments);
-                          alert("Edit succeeded!");
-
-
-                          
+                          alert('Edit succeeded!');
                         } catch (err) {
                           console.log(err);
                         }
-                      }else{
+                      } else {
                         setVal(item.comment);
                       }
                     }}
                     className={sty.edit}
                   >
-                    {item.edit ? "Save" : "Edit"}
+                    {item.edit ? 'Save' : 'Edit'}
                   </a>
                 </div>
               </p>
@@ -137,7 +134,7 @@ export default function Comments({
           type="button"
           onClick={showNextComments}
           onKeyDown={(event) => {
-            if (event.key === "Enter") {
+            if (event.key === 'Enter') {
               showNextComments();
             }
           }}
@@ -146,7 +143,7 @@ export default function Comments({
         </button>
         {/* )} */}
         <p className="text-gray-base uppercase text-xs mt-2">
-          {posted ? formatDistance(posted, new Date()) : ""} ago
+          {posted ? formatDistance(posted, new Date()) : ''} ago
         </p>
       </div>
       <AddComment

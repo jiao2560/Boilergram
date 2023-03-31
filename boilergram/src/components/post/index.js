@@ -1,10 +1,10 @@
-import { useRef } from "react";
-import PropTypes from "prop-types";
-import Header from "./header";
-import Image from "./image";
-import Actions from "./actions";
-import Footer from "./footer";
-import Comments from "./comments";
+import {useRef} from 'react';
+import PropTypes from 'prop-types';
+import Header from './header';
+import Image from './image';
+import Actions from './actions';
+import Footer from './footer';
+import Comments from './comments';
 import {
   collection,
   addDoc,
@@ -14,11 +14,11 @@ import {
   getDoc,
   getDocs,
   query,
-} from "firebase/firestore";
-import { storage, firestore } from "../../lib/firebase";
-import sty from "./comment.module.css";
+} from 'firebase/firestore';
+import {storage, firestore} from '../../lib/firebase';
+import sty from './comment.module.css';
 
-export default function Post({ content, getTimelinePhotos, openEdit }) {
+export default function Post({content, getTimelinePhotos, openEdit}) {
   const commentInput = useRef(null);
   const handleFocus = () => commentInput.current.focus();
 
@@ -31,15 +31,15 @@ export default function Post({ content, getTimelinePhotos, openEdit }) {
     >
       <Header username={content.username} />
       <Image src={content.imageSrc} caption={content.caption} />
-      <div class="px-3 pt-3 pb-0 text-sm text-gray-base">{content.desc}</div>
+      <div className="px-3 pt-3 pb-0 text-sm text-gray-base">{content.desc}</div>
       <div className={sty.optIndexBox}>
         <a
           onClick={async () => {
-            console.log("content = ", content)
+            console.log('content = ', content);
             try {
-              await deleteDoc(doc(firestore, "photos", content.docId));
+              await deleteDoc(doc(firestore, 'photos', content.docId));
               getTimelinePhotos();
-              alert("Delete succeeded!")
+              alert('Delete succeeded!');
             } catch (err) {
               console.log(err);
             }

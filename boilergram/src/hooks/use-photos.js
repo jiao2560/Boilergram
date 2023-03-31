@@ -1,10 +1,10 @@
 import {
   useState,
-  useEffect
+  useEffect,
 } from 'react';
 import {
   getPhotos,
-  getUserByUserId
+  getUserByUserId,
 } from '../services/firebase';
 
 
@@ -16,8 +16,8 @@ export default function usePhotos(user) {
       let authUser = window.localStorage.getItem('authUser');
       if (authUser) {
         authUser = JSON.parse(authUser);
-        let res = await getUserByUserId(authUser.uid);
-        console.log("res = ", res)
+        const res = await getUserByUserId(authUser.uid);
+        console.log('res = ', res);
         user = res[0];
       }
     }
@@ -25,14 +25,14 @@ export default function usePhotos(user) {
     // example: [2, 1, 5] <- 2 being raphel
     if (user?.following?.length > 0) {
       const followedUserPhotos = await getPhotos(user.userId, user.following);
-      console.log("followedUserPhotos = ", followedUserPhotos)
+      console.log('followedUserPhotos = ', followedUserPhotos);
 
 
       // re-arrange array to be newest photos first by dateCreated
       followedUserPhotos.sort((a, b) => b.dateCreated - a.dateCreated);
       setPhotos(followedUserPhotos);
     }
-  }
+  };
 
   useEffect(() => {
     getTimelinePhotos();
@@ -40,6 +40,6 @@ export default function usePhotos(user) {
 
   return {
     photos,
-    getTimelinePhotos
+    getTimelinePhotos,
   };
 }
