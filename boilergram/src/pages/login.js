@@ -1,12 +1,12 @@
-import {useState, useContext, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import {deleteUser} from 'firebase/auth';
+import { deleteUser } from 'firebase/auth';
 
 export default function Login() {
   const history = useHistory();
-  const {firebase} = useContext(FirebaseContext);
+  const { firebase } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -17,30 +17,97 @@ export default function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
+
+
     try {
       await firebase
-          .auth()
-          .signInWithEmailAndPassword(emailAddress, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            if (!user.emailVerified) {
-              if (
-                Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 <
+        .auth()
+        .signInWithEmailAndPassword(emailAddress, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          if (!user.emailVerified) {
+            if (
+              Date.parse(user.metadata.creationTime) + 24 * 3600 * 1000 <
               Date.now()
-              ) {
-                setError(
-                    'You did not verify the email within 24 hours, the account has been deleted, please sign up again.',
-                );
-                firebase.auth().signOut();
-                deleteUser(user);
-              } else {
-                setError('Please verify your email.');
-                firebase.auth().signOut();
-              }
+            ) {
+              setError(
+                'You did not verify the email within 24 hours, the account has been deleted, please sign up again.',
+              );
+              firebase.auth().signOut();
+              deleteUser(user);
             } else {
-              history.push(ROUTES.DASHBOARD);
+              setError('Please verify your email.');
+              firebase.auth().signOut();
             }
-          });
+          } else {
+            // Fetch Purdue news from Google News API and display it in a pop-up window on the screen
+            fetch('https://newsapi.org/v2/everything?q=purdue&apiKey=e0a5ab8db63d4626866917dd42aa6d60')
+              .then((res) => res.json())
+              .then((data) => {
+                const news = data.articles;
+                let newsList = '';
+                news.forEach((item) => {
+                  newsList += `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`;
+                });
+                const newsWindow = window.open(
+                  '',
+                  'Purdue News',
+                  'height=500,width=500',
+                );
+                newsWindow.document.write(
+                  `<html>
+                  <head>
+                    <title>Purdue Latest News</title>
+                    <style>
+                      body {
+                        font-family: Arial, sans-serif;
+                        padding: 20px;
+                      }
+                      h1 {
+                        text-align: center;
+                        margin-bottom: 30px;
+                      }
+                      li {
+                        list-style: none;
+                        margin-bottom: 20px;
+                      }
+                      a {
+                        text-decoration: none;
+                        color: #333;
+                      }
+                      .timer {
+                        font-size: 20px;
+                        font-weight: bold;
+                        text-align: center;
+                        margin-top: 10px;
+                      }
+                    </style>
+                  </head>
+                  <body>
+                    <h1>Purdue Latest News</h1>
+                    <div class="timer">Closing in 30 seconds...</div>
+                    <ul>
+                      ${newsList}
+                    </ul>
+                    <script>
+                      const timer = document.querySelector('.timer');
+                      let count = 30;
+                      const interval = setInterval(() => {
+                        count--;
+                        timer.textContent = 'Closing in ' + count + ' seconds...';
+                        if (count === 0) {
+                          clearInterval(interval);
+                          window.close();
+                        }
+                      }, 1000);
+                    </script>
+                  </body>
+                </html>`,
+                );
+              });
+            history.push(ROUTES.DASHBOARD);
+          }
+        });
     } catch (error) {
       setEmailAddress('');
       setPassword('');
@@ -83,7 +150,7 @@ export default function Login() {
               placeholder="Email"
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2
                          border border-gray-primary rounded mb-2"
-              onChange={({target}) => setEmailAddress(target.value)}
+              onChange={({ target }) => setEmailAddress(target.value)}
               value={emailAddress}
             />
             <input
@@ -92,14 +159,14 @@ export default function Login() {
               placeholder="Password"
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2
                          border border-gray-primary rounded mb-2"
-              onChange={({target}) => setPassword(target.value)}
+              onChange={({ target }) => setPassword(target.value)}
               value={password}
             />
             <button
               disabled={isInvalid}
               type="submit"
               className={`bg-blue-medium text-white w-full
-                          rounded h-8 font-bold 
+                          rounded h-8 font-bold
                           ${isInvalid && 'opacity-50'}`}
             >
               Log in
