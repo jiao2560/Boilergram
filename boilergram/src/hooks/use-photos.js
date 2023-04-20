@@ -10,7 +10,7 @@ import {
 
 export default function usePhotos(user) {
   const [photos, setPhotos] = useState(null);
-
+  console.log("photos9999 = ", photos)
   const getTimelinePhotos = async () => {
     if (!user) {
       let authUser = window.localStorage.getItem('authUser');

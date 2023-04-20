@@ -29,9 +29,19 @@ export default function Post({content, getTimelinePhotos, openEdit}) {
       className="rounded col-span-4
      border bg-white border-gray-primary mb-12"
     >
-      <Header username={content.username} />
-      <Image src={content.imageSrc} caption={content.caption} />
-      <div className="px-3 pt-3 pb-0 text-sm text-gray-base">{content.desc}</div>
+      <Header username={content.username} headpic={content.headpic} />
+      {content.imageSrc && (
+        <Image src={content.imageSrc} caption={content.caption} />
+      )}
+      {content.desc && (
+        <div className="px-3 pt-3 pb-0 text-sm text-gray-base">{content.desc}</div>
+      )}
+      {content.videoSrc && (
+        <video controls style={{
+          mawWidth: '100%'
+        }} src={content.videoSrc}>
+        </video>
+      )}
       <div className={sty.optIndexBox}>
         <a
           onClick={async () => {
