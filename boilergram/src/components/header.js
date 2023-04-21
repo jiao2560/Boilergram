@@ -107,33 +107,7 @@ export default function Header() {
                     </Link>
                   </>
               )}
-            <Link to={ROUTES.RESET_EMAIL}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Email
-              </button>
-            </Link>
-            <Link to={ROUTES.RESET_USERNAME}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Username
-              </button>
-            </Link>
-            <Link to={ROUTES.RESET_PROFILE}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Profile
-              </button>
-            </Link>
+           
           </div>
         </div>
       </div>
