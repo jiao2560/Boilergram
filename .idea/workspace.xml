@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5485bf71-b4a8-4712-81bb-edfb0e554a7d" name="Changes" comment="" />
+    <list default="true" id="5485bf71-b4a8-4712-81bb-edfb0e554a7d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boilergram/src/components/profile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/boilergram/src/components/profile/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boilergram/src/pages/recieve-news.js" beforeDir="false" afterPath="$PROJECT_DIR$/boilergram/src/pages/recieve-news.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,6 +71,8 @@
       <workItem from="1680055463182" duration="189000" />
       <workItem from="1680055754940" duration="99000" />
       <workItem from="1680243896645" duration="355000" />
+      <workItem from="1681286618099" duration="832000" />
+      <workItem from="1681696745932" duration="609000" />
     </task>
     <servers />
   </component>

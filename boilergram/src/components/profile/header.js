@@ -2,6 +2,10 @@ import {useState, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import useUser from '../../hooks/use-user';
+import moment from 'moment';
+import {storage, firestore} from '../../lib/firebase';
+import {updateDoc, doc} from 'firebase/firestore';
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import {isUserFollowingProfile, toggleFollow} from '../../services/firebase';
 import UserContext from '../../context/user';
 import {DEFAULT_IMAGE_PATH} from '../../constants/paths';
@@ -20,7 +24,7 @@ export default function Header({
   },
 }) {
   const {user: loggedInUser} = useContext(UserContext);
-  const {user} = useUser(loggedInUser?.uid);
+  const {user, setActiveUser} = useUser(loggedInUser?.uid);
   const [isFollowingProfile, setIsFollowingProfile] = useState(null);
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
 
@@ -44,20 +48,56 @@ export default function Header({
       isLoggedInUserFollowingProfile();
     }
   }, [user?.username, profileUserId]);
+  console.log("user1111 = ", user)
 
   return (
     <div className="grid grid-cols-3
     gap-4 justify-between mx-auto max-w-screen-lg">
       <div className="container flex justify-center items-center">
         {profileUsername ? (
-                    <img
-                      className="rounded-full h-40 w-40 flex"
-                      alt={`${fullName} profile picture`}
-                      src={`/images/avatars/${profileUsername}.jpg`}
-                      onError={(e) => {
-                        e.target.src = DEFAULT_IMAGE_PATH;
-                      }}
-                    />
+            <div>                    
+              <img
+              className="rounded-full h-40 w-40 flex"
+              alt={`${fullName} profile picture`}
+              src={user.headpic || DEFAULT_IMAGE_PATH}
+            />
+                <input
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  const uuid = moment().valueOf();
+                  const url = `/images/users/test1/${uuid}_img`;
+                  const storageRef = ref(storage, url);
+                  uploadBytes(storageRef, file)
+                      .then(async (snapshot) => {
+                        console.log('Uploaded a file!');
+                        try {
+                          let headpic = await getDownloadURL(ref(storage, url));
+                          const docRef = doc(firestore, 'users', user.docId);
+                          await updateDoc(docRef, {
+                            headpic
+                          });
+                          setActiveUser({
+                            ...user,
+                            headpic
+                          })
+                          alert('Update Success!');
+                        } catch (err) {
+                          console.log(err);
+                        }
+
+
+
+                        
+                      })
+                      .catch((err) => {
+                        console.log('err = ', err);
+                      });
+
+                  console.log('file = ', file);
+                }}
+                type="file"
+              />
+            </div>
                 ) : (
                     <Skeleton circle height={150} width={150} count={1} />
                 )}

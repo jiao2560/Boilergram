@@ -7,7 +7,7 @@ import * as ROUTES from '../constants/routes';
 export default function Header() {
   const {user} = useContext(UserContext);
   const {firebase} = useContext(FirebaseContext);
-
+  console.log("use999 = ", user)
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
@@ -71,11 +71,15 @@ export default function Header() {
                         />
                       </svg>
                     </button>
-                    <div className="flex items-center cursor-pointer">
+                    <div style={{
+                      width: 30,
+                      height: 30,
+                      marginRight: 20
+                    }} className="flex items-center cursor-pointer">
                       <Link to={`/p/${user.displayName}`}>
                         <img
                           className="rounded-full h-8 w-8 flex"
-                          src={`/images/avatars/${user.displayName}.jpg`}
+                          src={user.headpic ? user.headpic : `/images/avatars/${user.displayName}.jpg`}
                           alt={`${user.displayName} profile`}
                         />
                       </Link>
@@ -103,33 +107,7 @@ export default function Header() {
                     </Link>
                   </>
               )}
-            <Link to={ROUTES.RESET_EMAIL}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Email
-              </button>
-            </Link>
-            <Link to={ROUTES.RESET_USERNAME}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Username
-              </button>
-            </Link>
-            <Link to={ROUTES.RESET_PROFILE}>
-              <button
-                type="button"
-                className="bg-blue-medium font-bold text-sm rounded
-                      text-white w-10 h-5"
-              >
-                        Reset Profile
-              </button>
-            </Link>
+           
           </div>
         </div>
       </div>
