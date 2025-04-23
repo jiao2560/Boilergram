@@ -3,16 +3,6 @@ import PropTypes from 'prop-types';
 import Header from './header';
 import Photos from './photos';
 import {getUserPhotosByUserId} from '../../services/firebase';
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-} from 'firebase/storage';
-import {
-  firebase,
-  FieldValue,
-  storage,
-} from '../../lib/firebase';
 
 export default function Profile({user}) {
   const reducer = (state, newState) => ({...state, ...newState});
@@ -31,20 +21,6 @@ export default function Profile({user}) {
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
       const photos = await getUserPhotosByUserId(user.userId);
-
-      for(let i = 0; i < photos.length; i++) {
-        let photo = photos[i];
-        if (photo.imageSrc) {
-          let url = await getDownloadURL(ref(storage, photo.imageSrc));
-          photo.imageSrc = url;
-        }
-        if (photo.videoSrc) {
-          let url = await getDownloadURL(ref(storage, photo.videoSrc));
-          photo.videoSrc = url;
-        }
-      }
-
-
       dispatch({profile: user, photosCollection:
           photos, followerCount: user.followers.length});
     }
@@ -60,6 +36,14 @@ export default function Profile({user}) {
         setFollowerCount={dispatch}
       />
       <Photos photos={photosCollection} />
+
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          window.location.href='http://google.com';
+        }}
+      > My website</button>
     </>
   );
 }

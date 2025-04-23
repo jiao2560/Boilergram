@@ -14,10 +14,9 @@ export default function Timeline() {
   const [show, setShow] = useState(false);
   const [desc, setDesc] = useState('');
   const [imageSrc, setImageSrc] = useState('');
-  const [videoSrc, setVideoSrc] = useState('');
   const [curOpt, setCurOpt] = useState('ADD');
   const [curItem, setCurItem] = useState(null);
-  console.log("photos = ", photos);
+  // console.log("photos = ", photos);
   const openEdit = (item) => {
     setCurOpt('EDIT');
     setDesc(item.desc);
@@ -75,6 +74,7 @@ export default function Timeline() {
                   const uuid = moment().valueOf();
                   const url = `/images/users/test1/${uuid}_img`;
                   const storageRef = ref(storage, url);
+
                   uploadBytes(storageRef, file)
                       .then((snapshot) => {
                         console.log('Uploaded a file!');
@@ -89,44 +89,17 @@ export default function Timeline() {
                 type="file"
               />
             </div>
-
-
-            <div className={sty.inputItem}>
-              <div className={sty.inputItemLabel}>Video:</div>
-              <input
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  const uuid = moment().valueOf();
-                  const url = `/images/users/test1/${uuid}_video`;
-                  const storageRef = ref(storage, url);
-                  uploadBytes(storageRef, file)
-                      .then((snapshot) => {
-                        console.log('Uploaded a file!');
-                        setVideoSrc(url);
-                      })
-                      .catch((err) => {
-                        console.log('err = ', err);
-                      });
-
-                  console.log('file = ', file);
-                }}
-                type="file"
-              />
-            </div>
-
-
             <div className={sty.addBox}>
               <button
                 onClick={async () => {
-                  // if (!desc) {
-                  //   alert('Please enter a description');
-                  //   return;
-                  // }
-                  // if (!imageSrc) {
-                  //   alert('Please upload a picture');
-                  //   return;
-                  // }
-                  // videoSrc
+                  if (!desc) {
+                    alert('Please enter a description');
+                    return;
+                  }
+                  if (!imageSrc) {
+                    alert('Please upload a picture');
+                    return;
+                  }
                   let u = window.localStorage.getItem('authUser');
                   if (u) {
                     u = JSON.parse(window.localStorage.getItem('authUser'));
@@ -138,7 +111,6 @@ export default function Timeline() {
                       imageSrc,
                       desc,
                       userId: u.uid,
-                      videoSrc
                     });
                     alert('ADD Success!');
                     setShow(false);
@@ -180,6 +152,11 @@ export default function Timeline() {
             getTimelinePhotos={getTimelinePhotos}
             content={content}
           />
+          // <div key={content.docId}>
+          //   <img src={content.imageSrc} alt="" srcset="" />
+
+          //   {content.imageSrc}
+          // </div>
         ))
       ) : (
         <p className="text-center text-2xl">Follow people to see photos</p>
